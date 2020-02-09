@@ -20,5 +20,4 @@ public class Application {
             System.out.println(FigletFont.convertOneLine("BDD TRADER"));
         };
     }
-
 }

@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -cp "target/classes:target/dependency/*" net.bddtrader.Application
+web: java -jar -Dserver.port=$PORT -cp "target/classes:target/dependency/*" target/bddtrader-1.0.0-SNAPSHOT.jar
