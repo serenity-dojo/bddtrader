@@ -1,10 +1,9 @@
-package net.bddtrader.apitests.status;
+package net.bddtrader.unittests.status;
 
 import net.bddtrader.config.TradingDataSource;
 import net.bddtrader.status.StatusController;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

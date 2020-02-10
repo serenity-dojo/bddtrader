@@ -1,11 +1,9 @@
-package net.bddtrader.apitests.stocks;
+package net.bddtrader.unittests.stocks;
 
 import net.bddtrader.stocks.StockController;
 import net.bddtrader.tradingdata.TradingData;
-import net.bddtrader.tradingdata.exceptions.IllegalPriceManiuplationException;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.web.client.HttpClientErrorException;
 
 import static net.bddtrader.config.TradingDataSource.DEV;
 import static org.assertj.core.api.Assertions.assertThat;

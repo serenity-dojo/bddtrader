@@ -1,4 +1,4 @@
-package net.bddtrader.apitests.clients;
+package net.bddtrader.unittests.clients;
 
 import net.bddtrader.clients.Client;
 import net.bddtrader.clients.ClientController;
