@@ -40,7 +40,7 @@ public class StockController {
     }
 
     @RequestMapping(value = "/api/stock/{stockid}/price", method = RequestMethod.POST)
-    @ApiOperation("Update the price of a given stock in a test environment")
+    @ApiOperation("Update the price of a given stock")
     public void updatePriceFor(@PathVariable String stockid, @RequestBody Double currentPrice) {
         TradingData.instanceFor(tradingDataSource).updatePriceFor(stockid, currentPrice);
     }
