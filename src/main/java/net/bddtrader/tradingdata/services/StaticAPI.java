@@ -3,7 +3,6 @@ package net.bddtrader.tradingdata.services;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.google.common.collect.Lists;
 import net.bddtrader.news.NewsItem;
 import net.bddtrader.portfolios.Trade;
 import net.bddtrader.stocks.Company;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.google.common.collect.Lists.newArrayList;
 
@@ -32,14 +32,26 @@ public class StaticAPI implements TradingDataAPI {
     }
 
     @Override
-    public List<NewsItem> getNewsFor(String stockid) {
+    public List<NewsItem> getNewsFor(List<String> stockids) {
         File jsonInput = testDataFrom("news.json");
         try {
-            return mapper.readValue(jsonInput, new TypeReference<List<NewsItem>>(){});
+            List<NewsItem> items = mapper.readValue(jsonInput, new TypeReference<List<NewsItem>>(){});
+            if (stockids.isEmpty()) {
+                return items;
+            } else {
+                return items.stream().filter(item -> isRelatedNews(item, stockids))
+                        .collect(Collectors.toList());
+            }
         } catch (IOException e) {
             e.printStackTrace();
             return new ArrayList<>();
         }
+    }
+
+    private boolean isRelatedNews(NewsItem item, List<String> stockids) {
+        return stockids.stream().anyMatch(
+                stockId -> item.getRelated().contains(stockId)
+        );
     }
 
 
@@ -83,6 +95,11 @@ public class StaticAPI implements TradingDataAPI {
     @Override
     public void reset() {
         stockPrices = loadSamplePrices();
+    }
+
+    @Override
+    public List<net.bddtrader.tradingdata.Trade> getLatestTrades() {
+        return null;
     }
 
     @Override

@@ -6,12 +6,12 @@ import net.bddtrader.config.TraderConfiguration;
 import net.bddtrader.config.TradingDataSource;
 import net.bddtrader.tradingdata.TradingData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -29,10 +29,19 @@ public class NewsController {
         this(traderConfiguration.getTradingDataSource());
     }
 
-    @RequestMapping(value="/api/stock/{stockid}/news", method = GET)
+    @RequestMapping(value="/api/news", method = GET)
     @ApiOperation(value = "Get news articles about a given stock",
                   notes="Use 'market' to get market-wide news.")
-    public List<NewsItem> newsFor(@PathVariable String stockid) {
-        return TradingData.instanceFor(tradingDataSource).getNewsFor(stockid);
+    public List<NewsItem> newsFor(@RequestParam(required = false) String symbols) {
+        List<String> requestedStockids;
+
+        if (symbols == null || symbols.isEmpty()) {
+            requestedStockids = new ArrayList<>();
+        } else {
+            requestedStockids = Arrays.stream(symbols.split(","))
+                    .map(stock -> stock.trim().toUpperCase())
+                    .collect(Collectors.toList());
+        }
+        return TradingData.instanceFor(tradingDataSource).getNewsFor(requestedStockids);
     }
 }

@@ -28,7 +28,7 @@ public class StockController {
     }
 
     @RequestMapping(value="/api/stock/{stockid}/price", method = GET)
-    @ApiOperation("Find the price of a given stock")
+    @ApiOperation("Find the latest price of a given stock")
     public Double priceFor(@PathVariable String stockid) {
         return TradingData.instanceFor(tradingDataSource).getPriceFor(stockid);
     }

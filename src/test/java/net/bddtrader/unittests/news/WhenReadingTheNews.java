@@ -20,9 +20,7 @@ public class WhenReadingTheNews {
     }
 
     @Test
-    public void shouldFindTheLatestNewsAboutAParticularStockFromStaticData() {
-
-        newsController = new NewsController(DEV);
+    public void shouldFindTheLatestNewsAboutAParticularStock() {
 
         List<NewsItem> news = newsController.newsFor("AAPL");
 
@@ -34,14 +32,15 @@ public class WhenReadingTheNews {
     }
 
     @Test
-    public void shouldFindTheLatestNewsAboutAParticularStock() {
+    public void shouldFindTheLatestNewsAboutMultipleStocks() {
 
-        List<NewsItem> news = newsController.newsFor("AAPL");
+        List<NewsItem> news = newsController.newsFor("FB,GOOGL");
 
         assertThat(news).isNotEmpty();
 
         news.forEach(
-                newsItem -> {assertThat(newsItem.getRelated()).contains("AAPL");}
+                newsItem -> {assertThat(newsItem.getRelated())
+                                .matches(item -> item.contains("FB") || item.contains("GOOGL"));}
         );
     }
 

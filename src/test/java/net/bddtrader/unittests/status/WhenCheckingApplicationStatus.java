@@ -17,11 +17,11 @@ public class WhenCheckingApplicationStatus {
     }
 
     @Test
-    public void statusShouldIncludeTradeDataSource(TradingDataSource dataSource, String statusMessage) {
+    public void statusShouldIncludeTradeDataSource() {
 
-        controller = new StatusController(dataSource);
+        controller = new StatusController(TradingDataSource.DEV);
 
-        assertThat(controller.status()).isEqualTo(statusMessage);
+        assertThat(controller.status()).isEqualTo("BDDTrader running against DEV");
     }
 
 }
