@@ -1,35 +1,28 @@
 package net.bddtrader;
 
 import io.restassured.RestAssured;
-import org.hamcrest.Matchers;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.everyItem;
+
+@Ignore
 public class WhenGettingCompanyDetails {
 
-    @Test
-    public void should_return_name_and_sector_in_production() {
+    @Before
+    public void prepare_rest_config() {
         RestAssured.baseURI = "https://bddtrader.herokuapp.com/api";
-
-        RestAssured.given()
-                .pathParam("symbol","aapl")
-                .when()
-                .get("/stock/{symbol}/company")
-                .then()
-                .body("companyName", Matchers.equalTo("Apple, Inc."))
-                .body("sector",Matchers.equalTo("Electronic Technology"));
     }
 
     @Test
-    public void should_return_name_and_sector_locally() {
-        RestAssured.baseURI = "http://localhost:9000/api";
-
-        RestAssured.given()
-                .pathParam("symbol","aapl")
+    public void should_return_news_for_a_requested_company() {
+        given().queryParam("symbols", "fb")
                 .when()
-                .get("/stock/{symbol}/company")
+                .get("/news")
                 .then()
-                .body("companyName", Matchers.equalTo("Apple, Inc."))
-                .body("sector",Matchers.equalTo("Electronic Technology"));
+                .body("related", everyItem(containsString("FB")));
     }
 }

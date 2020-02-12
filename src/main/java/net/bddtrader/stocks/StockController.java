@@ -39,6 +39,12 @@ public class StockController {
         return TradingData.instanceFor(tradingDataSource).getCompanyFor(stockid);
     }
 
+    @RequestMapping(value="/api/stock/{stockid}/book", method = GET)
+    @ApiOperation("Find the latest trades for a given stock")
+    public TradeBook bookDetailsFor(@PathVariable String stockid) {
+        return TradingData.instanceFor(tradingDataSource).getBookFor(stockid);
+    }
+
     @RequestMapping(value = "/api/stock/{stockid}/price", method = RequestMethod.POST)
     @ApiOperation("Update the price of a given stock")
     public void updatePriceFor(@PathVariable String stockid, @RequestBody Double currentPrice) {
