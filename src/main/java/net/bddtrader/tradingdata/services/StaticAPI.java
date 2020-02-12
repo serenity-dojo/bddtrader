@@ -6,6 +6,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import net.bddtrader.news.NewsItem;
 import net.bddtrader.portfolios.Trade;
 import net.bddtrader.stocks.Company;
+import net.bddtrader.stocks.TradeBook;
+import net.bddtrader.tops.Top;
 import net.bddtrader.tradingdata.TradingDataAPI;
 
 import java.io.File;
@@ -35,7 +37,8 @@ public class StaticAPI implements TradingDataAPI {
     public List<NewsItem> getNewsFor(List<String> stockids) {
         File jsonInput = testDataFrom("news.json");
         try {
-            List<NewsItem> items = mapper.readValue(jsonInput, new TypeReference<List<NewsItem>>(){});
+            List<NewsItem> items = mapper.readValue(jsonInput, new TypeReference<List<NewsItem>>() {
+            });
             if (stockids.isEmpty()) {
                 return items;
             } else {
@@ -58,7 +61,8 @@ public class StaticAPI implements TradingDataAPI {
     private Map<String, Double> loadSamplePrices() {
         File jsonInput = testDataFrom("prices.json");
         try {
-            Map<String, Map<String, Double>> samplePrices = mapper.readValue(jsonInput, new TypeReference<Map<String, Map<String, Double>>>(){});
+            Map<String, Map<String, Double>> samplePrices = mapper.readValue(jsonInput, new TypeReference<Map<String, Map<String, Double>>>() {
+            });
             return samplePrices.getOrDefault("marketPrices", new HashMap<>());
         } catch (IOException e) {
             e.printStackTrace();
@@ -89,6 +93,8 @@ public class StaticAPI implements TradingDataAPI {
             return new File(this.getClass().getResource("/sample_data/" + source).toURI());
         } catch (URISyntaxException e) {
             throw new IllegalStateException("No test data found for " + source);
+        } catch(NullPointerException npe) {
+            throw new MissingTestDataFileException(source);
         }
     }
 
@@ -103,17 +109,43 @@ public class StaticAPI implements TradingDataAPI {
     }
 
     @Override
+    public List<Top> getTops() {
+        try {
+            File jsonInput = testDataFrom("tops.json");
+            return mapper.readValue(jsonInput, new TypeReference<List<Top>>() {
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public TradeBook getBookFor(String stockid) {
+        try {
+            File jsonInput = testDataFrom("book_" + stockid.toLowerCase() + ".json");
+            if (!jsonInput.exists()) {
+                throw new NoSuchCompanyException(stockid);
+            }
+            return mapper.readValue(jsonInput, new TypeReference<TradeBook>() {});
+        } catch (IOException | MissingTestDataFileException e) {
+            throw new NoSuchCompanyException(stockid);
+        }
+    }
+
+    @Override
     public Company getCompanyFor(String stockid) {
         File jsonInput = testDataFrom("companies.json");
         try {
-            Map<String, Company> companies = mapper.readValue(jsonInput, new TypeReference<Map<String, Company>>(){});
+            Map<String, Company> companies = mapper.readValue(jsonInput, new TypeReference<Map<String, Company>>() {
+            });
             if (!companies.containsKey(stockid.toLowerCase())) {
-                throw new UnknownCompanyException("Unknown company: " + stockid);
+                throw new NoSuchCompanyException("Unknown company: " + stockid);
             }
             return companies.get(stockid.toLowerCase());
         } catch (IOException e) {
             e.printStackTrace();
-            throw new UnknownCompanyException("Could not load companies list");
+            throw new NoSuchCompanyException("Could not load companies list");
         }
     }
 }

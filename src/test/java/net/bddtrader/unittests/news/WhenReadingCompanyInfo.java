@@ -2,6 +2,7 @@ package net.bddtrader.unittests.news;
 
 import net.bddtrader.stocks.Company;
 import net.bddtrader.stocks.StockController;
+import net.bddtrader.tradingdata.services.NoSuchCompanyException;
 import net.bddtrader.tradingdata.services.UnknownCompanyException;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +35,7 @@ public class WhenReadingCompanyInfo {
         assertThat(apple.getCompanyName()).isEqualTo("Apple, Inc.");
     }
 
-    @Test(expected = UnknownCompanyException.class)
+    @Test(expected = NoSuchCompanyException.class)
     public void unknownCompanyShouldResultInAMeaningfulException() {
         controller.companyDetailsFor("unknown");
     }
