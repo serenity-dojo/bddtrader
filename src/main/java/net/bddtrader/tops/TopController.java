@@ -29,7 +29,7 @@ public class TopController {
     }
 
     @RequestMapping(value="/api/tops/last", method = GET)
-    @ApiOperation("Find the latest trades")
+    @ApiOperation("Find the latest trades, in summary form")
     public List<Top> lastTops() {
         return TradingData.instanceFor(tradingDataSource).getTops();
     }
