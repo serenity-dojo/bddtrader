@@ -9,7 +9,6 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.everyItem;
 
-@Ignore
 public class WhenGettingCompanyDetails {
 
     @Before
