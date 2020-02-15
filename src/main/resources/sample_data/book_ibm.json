@@ -49,7 +49,7 @@
   "trades": [
     {
       "price": 153.48,
-      "size": 100,
+      "volume": 100,
       "tradeId": 963480850,
       "isISO": true,
       "isOddLot": false,
@@ -60,7 +60,7 @@
     },
     {
       "price": 153.51,
-      "size": 100,
+      "volume": 100,
       "tradeId": 962535996,
       "isISO": false,
       "isOddLot": false,
@@ -71,7 +71,7 @@
     },
     {
       "price": 153.48,
-      "size": 100,
+      "volume": 100,
       "tradeId": 962137413,
       "isISO": true,
       "isOddLot": false,
@@ -82,7 +82,7 @@
     },
     {
       "price": 153.46,
-      "size": 100,
+      "volume": 100,
       "tradeId": 960562818,
       "isISO": false,
       "isOddLot": false,
@@ -93,7 +93,7 @@
     },
     {
       "price": 153.465,
-      "size": 100,
+      "volume": 100,
       "tradeId": 959929032,
       "isISO": false,
       "isOddLot": false,
@@ -104,7 +104,7 @@
     },
     {
       "price": 153.465,
-      "size": 100,
+      "volume": 100,
       "tradeId": 959223910,
       "isISO": false,
       "isOddLot": false,
@@ -115,7 +115,7 @@
     },
     {
       "price": 153.465,
-      "size": 78,
+      "volume": 78,
       "tradeId": 959073505,
       "isISO": false,
       "isOddLot": true,
@@ -126,7 +126,7 @@
     },
     {
       "price": 153.465,
-      "size": 22,
+      "volume": 22,
       "tradeId": 959018302,
       "isISO": false,
       "isOddLot": true,
@@ -137,7 +137,7 @@
     },
     {
       "price": 153.465,
-      "size": 78,
+      "volume": 78,
       "tradeId": 959018294,
       "isISO": false,
       "isOddLot": true,
@@ -148,7 +148,7 @@
     },
     {
       "price": 153.455,
-      "size": 22,
+      "volume": 22,
       "tradeId": 958678072,
       "isISO": false,
       "isOddLot": true,
@@ -159,7 +159,7 @@
     },
     {
       "price": 153.47,
-      "size": 100,
+      "volume": 100,
       "tradeId": 958527778,
       "isISO": false,
       "isOddLot": false,
@@ -170,7 +170,7 @@
     },
     {
       "price": 153.405,
-      "size": 100,
+      "volume": 100,
       "tradeId": 957268506,
       "isISO": false,
       "isOddLot": false,
@@ -181,7 +181,7 @@
     },
     {
       "price": 153.405,
-      "size": 100,
+      "volume": 100,
       "tradeId": 957267411,
       "isISO": false,
       "isOddLot": false,
@@ -192,7 +192,7 @@
     },
     {
       "price": 153.405,
-      "size": 72,
+      "volume": 72,
       "tradeId": 955948886,
       "isISO": false,
       "isOddLot": true,
@@ -203,7 +203,7 @@
     },
     {
       "price": 153.405,
-      "size": 100,
+      "volume": 100,
       "tradeId": 955587885,
       "isISO": false,
       "isOddLot": false,
@@ -214,7 +214,7 @@
     },
     {
       "price": 153.33,
-      "size": 95,
+      "volume": 95,
       "tradeId": 954002194,
       "isISO": false,
       "isOddLot": true,
@@ -225,7 +225,7 @@
     },
     {
       "price": 153.34,
-      "size": 2,
+      "volume": 2,
       "tradeId": 953334375,
       "isISO": false,
       "isOddLot": true,
@@ -236,7 +236,7 @@
     },
     {
       "price": 153.34,
-      "size": 98,
+      "volume": 98,
       "tradeId": 953334369,
       "isISO": false,
       "isOddLot": true,
@@ -247,7 +247,7 @@
     },
     {
       "price": 153.35,
-      "size": 2,
+      "volume": 2,
       "tradeId": 952596436,
       "isISO": false,
       "isOddLot": true,
@@ -258,7 +258,7 @@
     },
     {
       "price": 153.355,
-      "size": 100,
+      "volume": 100,
       "tradeId": 952469077,
       "isISO": false,
       "isOddLot": false,
