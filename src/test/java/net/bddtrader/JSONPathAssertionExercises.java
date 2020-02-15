@@ -24,9 +24,6 @@ public class JSONPathAssertionExercises {
      */
     @Test
     public void find_a_simple_field_value() {
-        given().pathParam("symbol", "aapl")
-                .when().get("stock/{symbol}/company")
-                .then().body("industry", equalTo("Telecommunications Equipment"));
     }
 
     /**
@@ -36,10 +33,6 @@ public class JSONPathAssertionExercises {
      */
     @Test
     public void check_that_a_field_value_contains_a_given_string() {
-
-        given().pathParam("symbol", "aapl")
-                .when().get("stock/{symbol}/company")
-                .then().body("description", containsString("smartphones"));
     }
 
 
@@ -50,9 +43,6 @@ public class JSONPathAssertionExercises {
      */
     @Test
     public void find_a_nested_field_value() {
-        given().pathParam("symbol", "aapl")
-                .when().get("stock/{symbol}/book")
-                .then().body("quote.symbol", equalTo("AAPL"));
     }
 
 
@@ -63,8 +53,6 @@ public class JSONPathAssertionExercises {
      */
     @Test
     public void find_a_list_of_values() {
-        when().get("/tops/last")
-                .then().body("symbol", hasItems("PTN", "PINE", "TRS"));
     }
 
     /**
@@ -73,8 +61,6 @@ public class JSONPathAssertionExercises {
      */
     @Test
     public void make_sure_at_least_one_item_matches_a_given_condition() {
-        when().get("/tops/last")
-                .then().body("price", hasItems(greaterThan(100.0f)));
     }
 
     /**
@@ -83,9 +69,6 @@ public class JSONPathAssertionExercises {
      */
     @Test
     public void find_a_field_of_an_element_in_a_list() {
-        given().pathParam("symbol","aapl")
-                .when().get("/stock/{symbol}/book")
-                .then().body("trades[0].price", equalTo(319.59f));
     }
 
     /**
@@ -94,9 +77,6 @@ public class JSONPathAssertionExercises {
      */
     @Test
     public void find_a_field_of_the_last_element_in_a_list() {
-        given().pathParam("symbol","aapl")
-                .when().get("/stock/{symbol}/book")
-                .then().body("trades[-1].price", equalTo(319.54f));
     }
 
     /**
@@ -105,9 +85,6 @@ public class JSONPathAssertionExercises {
      */
     @Test
     public void find_the_number_of_trades() {
-        given().pathParam("symbol","aapl")
-                .when().get("/stock/{symbol}/book")
-                .then().body("trades.size()",equalTo(20));
     }
 
     /**
@@ -116,21 +93,15 @@ public class JSONPathAssertionExercises {
      */
     @Test
     public void find_the_minimum_trade_price() {
-        given().pathParam("symbol","aapl")
-                .when().get("/stock/{symbol}/book")
-                .then().body("trades.price.min()", equalTo(319.38f));
 
     }
 
     /**
-     * Exercise 10 - check
-     * Check that the trade id of the trade with the minimum price is 96001946
+     * Exercise 10 - find a value using closure expressions
+     * Check that the volume of the trade with the minimum price is 100
      */
     @Test
     public void find_the_size_of_the_trade_with_the_minimum_trade_price() {
-        RestAssured.given().pathParam("symbol","aapl")
-                .when().get("/stock/{symbol}/book")
-                .then().body("trades.min{ t -> t.price }.tradeId", equalTo(100));
     }
 
     /**

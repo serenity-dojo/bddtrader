@@ -3,7 +3,7 @@ package net.bddtrader.tops;
 public class Top {
     private String symbol;
     private float price;
-    private float size;
+    private float volume;
     private float time;
 
     public String getSymbol() {
@@ -22,12 +22,12 @@ public class Top {
         this.price = price;
     }
 
-    public float getSize() {
-        return size;
+    public float getVolume() {
+        return volume;
     }
 
-    public void setSize(float size) {
-        this.size = size;
+    public void setVolume(float volume) {
+        this.volume = volume;
     }
 
     public float getTime() {

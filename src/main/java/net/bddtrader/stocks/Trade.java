@@ -2,7 +2,7 @@ package net.bddtrader.stocks;
 
 public class Trade {
     private float price;
-    private float size;
+    private float volume;
     private float tradeId;
     private boolean isISO;
     private boolean isOddLot;
@@ -18,8 +18,8 @@ public class Trade {
         return price;
     }
 
-    public float getSize() {
-        return size;
+    public float getVolume() {
+        return volume;
     }
 
     public float getTradeId() {
@@ -56,8 +56,8 @@ public class Trade {
         this.price = price;
     }
 
-    public void setSize(float size) {
-        this.size = size;
+    public void setVolume(float volume) {
+        this.volume = volume;
     }
 
     public void setTradeId(float tradeId) {
