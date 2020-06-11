@@ -45,7 +45,7 @@ or, to run the application using live market data, you can run
 mvn spring-boot:run -Ddata.source=IEX
 ----
 
-To check that the application is running correctly, open http://localhost:8080/api/status in your browser.
+To check that the application is running correctly, open http://localhost:9000/api/status in your browser.
 
 === Running the tests
 
@@ -90,7 +90,7 @@ You can also view a list of the trading history of a portfolio using `/api/portf
 
 === Swagger REST Documentation
 
-When the application is running, you can see the REST API documentation at http://localhost:8080/swagger-ui.html
+When the application is running, you can see the REST API documentation at http://localhost:9000/swagger-ui.html
 
 === Tutorial
 
