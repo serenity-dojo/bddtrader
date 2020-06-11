@@ -39,7 +39,7 @@ You can run the application from the command line by running:
 mvn spring-boot:run
 ----
 
-To check that the application is running correctly, open http://localhost:8080/api/status in your browser.
+To check that the application is running correctly, open http://localhost:9000/api/status in your browser.
 
 === Running the tests
 
