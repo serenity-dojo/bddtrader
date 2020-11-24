@@ -11,10 +11,7 @@ public class WhenGettingCompanyDetails {
     public void should_return_name_and_sector_in_production() {
         RestAssured.baseURI = "https://bddtrader.herokuapp.com/api";
 
-        RestAssured.given()
-                .pathParam("symbol","aapl")
-                .when()
-                .get("/stock/{symbol}/company")
+        RestAssured.get("/stock/aapl/company")
                 .then()
                 .body("companyName", Matchers.equalTo("Apple, Inc."))
                 .body("sector",Matchers.equalTo("Electronic Technology"));
@@ -24,10 +21,7 @@ public class WhenGettingCompanyDetails {
     public void should_return_name_and_sector_locally() {
         RestAssured.baseURI = "http://localhost:9000/api";
 
-        RestAssured.given()
-                .pathParam("symbol","aapl")
-                .when()
-                .get("/stock/{symbol}/company")
+        RestAssured.get("/stock/aapl/company")
                 .then()
                 .body("companyName", Matchers.equalTo("Apple, Inc."))
                 .body("sector",Matchers.equalTo("Electronic Technology"));
