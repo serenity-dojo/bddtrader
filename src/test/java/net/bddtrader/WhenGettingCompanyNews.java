@@ -14,12 +14,18 @@ public class WhenGettingCompanyNews {
 
     @Test
     public void should_return_name_and_sector() {
-        RestAssured.given()
-                .pathParam("symbol","aapl")
-                .when()
-                .get("https://bddtrader.herokuapp.com/api/stock/{symbol}/company")
+        RestAssured.get("/stock/aapl/company")
                 .then()
                 .body("companyName", Matchers.equalTo("Apple, Inc."))
                 .body("sector",Matchers.equalTo("Electronic Technology"));
     }
+
+    @Test
+    public void should_return_name_and_sector_from_local() {
+        RestAssured.get("http://localhost:9000/api/stock/aapl/company")
+                .then()
+                .body("companyName", Matchers.equalTo("Apple, Inc."))
+                .body("sector",Matchers.equalTo("Electronic Technology"));
+    }
+
 }
