@@ -230,7 +230,7 @@
                 <version>3.0.0-M3</version>
                 <configuration>
                     <includes>
-                        <include>**/When*.java</include>
+                        <include>**/unittests/**/When*.java</include>
                         <include>**/*Spec.java</include>
                         <include>**/*Test.java</include>
                     </includes>
