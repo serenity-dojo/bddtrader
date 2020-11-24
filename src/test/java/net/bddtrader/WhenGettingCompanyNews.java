@@ -3,7 +3,6 @@ package net.bddtrader;
 import io.restassured.RestAssured;
 import org.hamcrest.Matchers;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class WhenGettingCompanyNews {
