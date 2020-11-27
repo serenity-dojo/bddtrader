@@ -6,9 +6,6 @@ import net.bddtrader.clients.Client;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.hamcrest.Matchers.equalTo;
 
 public class WhenUpdatingAndDeletingAClient {
@@ -40,17 +37,15 @@ public class WhenUpdatingAndDeletingAClient {
 
         // When I update the email address of a client
 
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("email","pam@gmail.com");
+        Client pamWithUpdates = Client.withFirstName("Pam").andLastName("Beasley").andEmail("pam@gmail.com");
 
         RestAssured.given().contentType(ContentType.JSON)
-                .and().body(updates)
-                .when().put("/client/{id}",id)
+                .and().body(pamWithUpdates)
+                .when().put("/client/{id}", id)
                 .then().statusCode(200);
 
-        RestAssured.when().get("/client/{id}",id)
+        RestAssured.when().get("/client/{id}", id)
                 .then().body("email", equalTo("pam@gmail.com"));
-
     }
 
     private String aClientExists(Client existingClient) {
