@@ -2,6 +2,7 @@ package net.bddtrader;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.specification.RequestSpecification;
 import net.bddtrader.clients.Client;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +28,7 @@ public class WhenCreatingANewClient {
         clientData.put("firstName","Michael");
         clientData.put("lastName","Scott");
 
-        RestAssured.given()
+        AuthenticatedRequest.withDigestAuthentication()
                 .contentType(ContentType.JSON)
                 .body(clientData)
                 .when()
@@ -39,6 +40,10 @@ public class WhenCreatingANewClient {
                 .and().body("lastName", equalTo("Scott"));
     }
 
+    @Before
+    public void authentication() {
+        RestAssured.basic("user","password");
+    }
     @Test
     public void a_new_client_can_be_created_using_a_map_structure() {
 
@@ -47,7 +52,7 @@ public class WhenCreatingANewClient {
         clientData.put("firstName","Kevin");
         clientData.put("lastName","Malone");
 
-        RestAssured.given()
+        AuthenticatedRequest.withDigestAuthentication()
                 .contentType(ContentType.JSON)
                 .body(clientData)
                 .when()

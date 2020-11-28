@@ -20,10 +20,11 @@ public class WhenUpdatingAndDeletingAClient {
         String id = aClientExists(Client.withFirstName("Pam").andLastName("Beasley").andEmail("pam@beasly.com"));
 
         // When I delete the client
-        RestAssured.given().delete("/client/{id}", id);
+        AuthenticatedRequest.withDigestAuthentication()
+                .delete("/client/{id}", id);
 
         // Then the client should no longer exist
-        RestAssured.given()
+        AuthenticatedRequest.withDigestAuthentication()
                 .get("/client/{id}", id)
                 .then()
                 .statusCode(404);
@@ -39,17 +40,19 @@ public class WhenUpdatingAndDeletingAClient {
 
         Client pamWithUpdates = Client.withFirstName("Pam").andLastName("Beasley").andEmail("pam@gmail.com");
 
-        RestAssured.given().contentType(ContentType.JSON)
+        AuthenticatedRequest.withDigestAuthentication()
+                .contentType(ContentType.JSON)
                 .and().body(pamWithUpdates)
                 .when().put("/client/{id}", id)
                 .then().statusCode(200);
 
-        RestAssured.when().get("/client/{id}", id)
+        AuthenticatedRequest.withDigestAuthentication()
+                .when().get("/client/{id}", id)
                 .then().body("email", equalTo("pam@gmail.com"));
     }
 
     private String aClientExists(Client existingClient) {
-        return RestAssured.given()
+        return AuthenticatedRequest.withDigestAuthentication()
                 .contentType(ContentType.JSON)
                 .body(existingClient)
                 .when()
