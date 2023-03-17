@@ -1,14 +1,12 @@
 package net.bddtrader.status;
 
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import net.bddtrader.config.TraderConfiguration;
 import net.bddtrader.config.TradingDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
