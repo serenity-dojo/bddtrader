@@ -2,8 +2,8 @@ package net.bddtrader.unittests.stocks;
 
 import net.bddtrader.stocks.StockController;
 import net.bddtrader.tradingdata.TradingData;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static net.bddtrader.config.TradingDataSource.DEV;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,7 +12,7 @@ public class WhenRequestingThePrice {
 
     StockController controller;
 
-    @Before
+    @BeforeEach
     public void prepareNewsController() {
         controller = new StockController(DEV);
         TradingData.instanceFor(DEV).reset();

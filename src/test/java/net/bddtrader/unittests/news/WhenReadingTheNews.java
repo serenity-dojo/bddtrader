@@ -2,8 +2,8 @@ package net.bddtrader.unittests.news;
 
 import net.bddtrader.news.NewsController;
 import net.bddtrader.news.NewsItem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class WhenReadingTheNews {
 
     NewsController newsController;
 
-    @Before
+    @BeforeEach
     public void prepareNewsController() {
         newsController = new NewsController(DEV);
     }
