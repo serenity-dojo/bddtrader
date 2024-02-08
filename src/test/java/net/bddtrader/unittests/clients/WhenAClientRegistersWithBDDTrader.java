@@ -7,8 +7,10 @@ import net.bddtrader.config.TradingDataSource;
 import net.bddtrader.exceptions.MissingMandatoryFieldsException;
 import net.bddtrader.portfolios.*;
 import net.bddtrader.tradingdata.TradingData;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
@@ -17,6 +19,7 @@ import static net.bddtrader.config.TradingDataSource.DEV;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@ExtendWith(SerenityJUnit5Extension.class)
 public class WhenAClientRegistersWithBDDTrader {
 
     ClientDirectory clientDirectory = new ClientDirectory();

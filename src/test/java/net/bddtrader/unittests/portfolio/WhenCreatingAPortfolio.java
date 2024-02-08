@@ -6,8 +6,10 @@ import net.bddtrader.portfolios.Portfolio;
 import net.bddtrader.portfolios.PortfolioWithPositions;
 import net.bddtrader.tradingdata.PriceReader;
 import net.bddtrader.tradingdata.TradingData;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static net.bddtrader.config.TradingDataSource.DEV;
 import static net.bddtrader.portfolios.Trade.buy;
@@ -18,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(SerenityJUnit5Extension.class)
 public class WhenCreatingAPortfolio {
 
     Portfolio portfolio = new Portfolio(1L,1L);

@@ -6,8 +6,10 @@ import net.bddtrader.clients.ClientDirectory;
 import net.bddtrader.config.TradingDataSource;
 import net.bddtrader.portfolios.*;
 import net.bddtrader.tradingdata.TradingData;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,7 @@ import static net.bddtrader.config.TradingDataSource.DEV;
 import static net.bddtrader.portfolios.Trade.buy;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ExtendWith(SerenityJUnit5Extension.class)
 public class WhenClientsUseTheirPortfolios {
 
     PortfolioDirectory portfolioDirectory = new PortfolioDirectory();
