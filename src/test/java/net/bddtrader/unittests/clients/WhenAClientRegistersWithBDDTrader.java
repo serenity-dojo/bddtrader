@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 
 import java.util.List;
 
@@ -153,7 +154,7 @@ public class WhenAClientRegistersWithBDDTrader {
         controller.register(Client.withFirstName("Sarah-Jane").andLastName("Smith").andEmail("sarah-jane@smith.com"));
 
         // WHEN
-        HttpStatus status = controller.findClientById(100L).getStatusCode();
+        HttpStatusCode status = controller.findClientById(100L).getStatusCode();
 
         // THEN
         assertThat(status).isEqualTo(HttpStatus.NOT_FOUND);
