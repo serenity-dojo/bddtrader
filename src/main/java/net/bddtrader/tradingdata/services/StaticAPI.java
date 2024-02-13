@@ -35,7 +35,8 @@ public class StaticAPI implements TradingDataAPI {
     public List<NewsItem> getNewsFor(List<String> stockids) {
         File jsonInput = testDataFrom("news.json");
         try {
-            List<NewsItem> items = mapper.readValue(jsonInput, new TypeReference<List<NewsItem>>(){});
+            List<NewsItem> items = mapper.readValue(jsonInput, new TypeReference<List<NewsItem>>() {
+            });
             if (stockids.isEmpty()) {
                 return items;
             } else {
@@ -58,7 +59,8 @@ public class StaticAPI implements TradingDataAPI {
     private Map<String, Double> loadSamplePrices() {
         File jsonInput = testDataFrom("prices.json");
         try {
-            Map<String, Map<String, Double>> samplePrices = mapper.readValue(jsonInput, new TypeReference<Map<String, Map<String, Double>>>(){});
+            Map<String, Map<String, Double>> samplePrices = mapper.readValue(jsonInput, new TypeReference<Map<String, Map<String, Double>>>() {
+            });
             return samplePrices.getOrDefault("marketPrices", new HashMap<>());
         } catch (IOException e) {
             e.printStackTrace();
