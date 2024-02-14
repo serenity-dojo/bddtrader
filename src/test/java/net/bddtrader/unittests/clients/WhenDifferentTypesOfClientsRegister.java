@@ -6,20 +6,24 @@ import net.bddtrader.clients.ClientDirectory;
 import net.bddtrader.config.TradingDataSource;
 import net.bddtrader.portfolios.*;
 import net.bddtrader.tradingdata.TradingData;
-import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
-import net.thucydides.junit.annotations.Qualifier;
-import net.thucydides.junit.annotations.TestData;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
+import org.junit.jupiter.api.BeforeEach;
 
-import java.util.Arrays;
-import java.util.Collection;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+
+
+
+import java.util.stream.Stream;
 
 import static net.bddtrader.config.TradingDataSource.DEV;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-@RunWith(SerenityParameterizedRunner.class)
+@ExtendWith(SerenityJUnit5Extension.class)
 public class WhenDifferentTypesOfClientsRegister {
 
     ClientDirectory clientDirectory = new ClientDirectory();
@@ -27,35 +31,20 @@ public class WhenDifferentTypesOfClientsRegister {
     PortfolioController portfolioController = new PortfolioController(TradingDataSource.DEV, portfolioDirectory);
     ClientController controller = new ClientController(clientDirectory, portfolioController);
 
-    public WhenDifferentTypesOfClientsRegister(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    static Stream<Arguments> namesProvider() {
+        return Stream.of(arguments("Sarah-Jane",     "Smith"),
+                         arguments("Bill",  "Oddie"),
+                         arguments("Tim", "Brooke-Taylor"));
     }
 
-    @TestData
-    public static Collection<Object[]> testData(){
-        return Arrays.asList(new Object[][]{
-                {"Sarah-Jane",     "Smith"},
-                {"Bill",  "Oddie"},
-                {"Tim", "Brooke-Taylor"},
-        });
-    }
-
-    private final String firstName;
-    private final String lastName;
-
-    @Qualifier
-    public String description() {
-        return "for " + firstName +" " + lastName;
-    }
-
-    @Before
+    @BeforeEach
     public void resetTestData() {
         TradingData.instanceFor(DEV).reset();
     }
 
-    @Test
-    public void aClientRegisters() {
+    @ParameterizedTest(name = "for {0} with {1}")
+    @MethodSource("namesProvider")
+    public void aClientRegisters(String firstName,String lastName) {
 
         // WHEN
         Client registeredClient = controller.register(Client.withFirstName(firstName).andLastName(lastName).andEmail("sarah-jane@smith.com"));
@@ -63,6 +52,5 @@ public class WhenDifferentTypesOfClientsRegister {
         // THEN
         assertThat(registeredClient).isEqualToComparingFieldByField(registeredClient);
     }
-
 
 }
