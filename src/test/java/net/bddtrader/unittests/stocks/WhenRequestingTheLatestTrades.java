@@ -1,20 +1,23 @@
 package net.bddtrader.unittests.stocks;
 
+import net.bddtrader.clients.Client;
+import net.bddtrader.exceptions.MissingMandatoryFieldsException;
 import net.bddtrader.stocks.StockController;
 import net.bddtrader.tradingdata.TradingData;
 import net.bddtrader.tradingdata.services.NoSuchCompanyException;
 import net.bddtrader.tradingdata.services.UnknownCompanyException;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static net.bddtrader.config.TradingDataSource.DEV;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class WhenRequestingTheLatestTrades {
 
     StockController controller;
 
-    @Before
+    @BeforeEach
     public void prepareController() {
         controller = new StockController(DEV);
         TradingData.instanceFor(DEV).reset();
@@ -26,9 +29,10 @@ public class WhenRequestingTheLatestTrades {
         assertThat(controller.bookDetailsFor ("AAPL").getTrades()).isNotEmpty();
     }
 
-    @Test(expected= NoSuchCompanyException.class)
+    @Test
     public void shouldThrowExceptionIfNoCompanyFound() {
-        controller.bookDetailsFor ("Unknown").getQuote().getSymbol();
+        assertThrows(NoSuchCompanyException.class,
+        ()-> controller.bookDetailsFor ("Unknown").getQuote().getSymbol());
     }
 
 }
