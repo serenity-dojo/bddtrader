@@ -6,22 +6,26 @@ import net.bddtrader.portfolios.Portfolio;
 import net.bddtrader.portfolios.PortfolioWithPositions;
 import net.bddtrader.tradingdata.PriceReader;
 import net.bddtrader.tradingdata.TradingData;
-import org.junit.Before;
-import org.junit.Test;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static net.bddtrader.config.TradingDataSource.DEV;
 import static net.bddtrader.portfolios.Trade.buy;
 import static net.bddtrader.portfolios.Trade.deposit;
 import static net.bddtrader.portfolios.Trade.sell;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(SerenityJUnit5Extension.class)
 public class WhenCreatingAPortfolio {
 
     Portfolio portfolio = new Portfolio(1L,1L);
 
-    @Before
+    @BeforeEach
     public void resetTestData() {
         TradingData.instanceFor(DEV).reset();
     }
@@ -63,9 +67,10 @@ public class WhenCreatingAPortfolio {
         assertThat(portfolio.calculateProfitUsing(priceReader)).isEqualTo(500.00);
     }
 
-    @Test(expected = InsufficientFundsException.class)
+    @Test
     public void buyerMustHaveEnoughCashToMakeAPurchase() {
-        portfolio.placeOrder(buy(20000L).sharesOf("IBM").at(100L).centsEach());
+        assertThrows(InsufficientFundsException.class,
+                ()-> portfolio.placeOrder(buy(20000L).sharesOf("IBM").at(100L).centsEach()));
     }
 
     @Test
