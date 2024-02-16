@@ -1,10 +1,9 @@
 package net.bddtrader.tops;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import net.bddtrader.config.TraderConfiguration;
 import net.bddtrader.config.TradingDataSource;
-import net.bddtrader.stocks.Company;
 import net.bddtrader.tradingdata.TradingData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,7 @@ import java.util.List;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
-@Api("top")
+@Tag(name = "top")
 public class TopController {
 
     private final TradingDataSource tradingDataSource;
@@ -29,7 +28,7 @@ public class TopController {
     }
 
     @RequestMapping(value="/api/tops/last", method = GET)
-    @ApiOperation("Find the latest trades")
+    @Operation(summary = "Find the latest trades")
     public List<Top> lastTops() {
         return TradingData.instanceFor(tradingDataSource).getTops();
     }
