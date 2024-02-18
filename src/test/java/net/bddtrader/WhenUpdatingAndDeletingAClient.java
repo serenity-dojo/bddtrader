@@ -3,13 +3,16 @@ package net.bddtrader;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import net.bddtrader.clients.Client;
-import org.junit.Before;
-import org.junit.Test;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.hamcrest.Matchers.equalTo;
 
+@ExtendWith(SerenityJUnit5Extension.class)
 public class WhenUpdatingAndDeletingAClient {
-    @Before
+    @BeforeEach
     public void setupBaseUrl() {
         RestAssured.baseURI = "http://localhost:9000/api";
     }

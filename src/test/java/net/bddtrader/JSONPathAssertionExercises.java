@@ -2,9 +2,8 @@ package net.bddtrader;
 
 import io.restassured.RestAssured;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -12,7 +11,7 @@ import static org.hamcrest.Matchers.*;
 
 public class JSONPathAssertionExercises {
 
-    @Before
+    @BeforeEach
     public void prepare_rest_config() {
         RestAssured.baseURI = "https://bddtrader.herokuapp.com/api";
     }

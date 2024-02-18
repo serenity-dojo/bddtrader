@@ -1,13 +1,14 @@
 package net.bddtrader;
 
-import io.restassured.RestAssured;
+
 import io.restassured.specification.RequestSpecification;
+import net.serenitybdd.rest.SerenityRest;
 
 public class AuthenticatedRequest {
     public static RequestSpecification withBasicAuthentication() {
-        return RestAssured.given().auth().basic("user", "password");
+        return SerenityRest.given().auth().basic("user", "password");
     }
     public static RequestSpecification withDigestAuthentication() {
-        return RestAssured.given().auth().digest("user", "password");
+        return SerenityRest.given().auth().digest("user", "password");
     }
 }

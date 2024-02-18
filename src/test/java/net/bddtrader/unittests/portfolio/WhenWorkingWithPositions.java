@@ -2,11 +2,14 @@ package net.bddtrader.unittests.portfolio;
 
 import net.bddtrader.portfolios.Position;
 import net.bddtrader.portfolios.Trade;
-import org.junit.Test;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static net.bddtrader.portfolios.Trade.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ExtendWith(SerenityJUnit5Extension.class)
 public class WhenWorkingWithPositions {
 
     @Test

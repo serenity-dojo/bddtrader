@@ -44,6 +44,7 @@ public class Client {
     public interface AndLastName { AndEmail andLastName(String lastName); }
     public interface AndEmail { Client andEmail(String email); }
 
+
     public static class ClientBuilder implements AndLastName, AndEmail {
         private final String firstName;
         private String lastName;

@@ -2,10 +2,10 @@ package net.bddtrader;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
-import net.bddtrader.clients.Client;
-import org.junit.Before;
-import org.junit.Test;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,9 +13,10 @@ import java.util.Map;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 
+@ExtendWith(SerenityJUnit5Extension.class)
 public class WhenCreatingANewClient {
 
-    @Before
+    @BeforeEach
     public void setupBaseUrl() {
         RestAssured.baseURI = "http://localhost:9000/api";
     }
@@ -40,7 +41,7 @@ public class WhenCreatingANewClient {
                 .and().body("lastName", equalTo("Scott"));
     }
 
-    @Before
+    @BeforeEach
     public void authentication() {
         RestAssured.basic("user","password");
     }
