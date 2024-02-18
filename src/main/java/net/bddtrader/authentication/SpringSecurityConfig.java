@@ -1,40 +1,52 @@
 package net.bddtrader.authentication;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+@EnableWebSecurity
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
+public class SpringSecurityConfig  {
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        auth.inMemoryAuthentication()
-                .withUser("user").password("{noop}password").roles("USER")
-                .and()
-                .withUser("admin").password("{noop}password").roles("USER", "ADMIN");
-
+    @Bean
+    public UserDetailsService userDetailsService() {
+        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        manager.createUser(User.withUsername("user")
+          .password("{noop}password")
+          .roles("USER")
+          .build());
+        manager.createUser(User.withUsername("admin")
+          .password("{noop}password")
+          .roles("USER", "ADMIN")
+          .build());
+        return manager;
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-
-        http
-                //HTTP Basic authentication
-                .httpBasic()
-                .and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/client/**").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "/api/client").hasRole("USER")
-                .antMatchers(HttpMethod.PUT, "/api/client/**").hasRole("USER")
-                .antMatchers(HttpMethod.PATCH, "/api/client/**").hasRole("USER")
-                .antMatchers(HttpMethod.DELETE, "/api/client/**").hasRole("USER")
-                .and()
-                .csrf().disable()
-                .formLogin().disable();
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
+                        authorizationManagerRequestMatcherRegistry
+                                .requestMatchers(HttpMethod.GET, "/api/client/**").hasRole("USER")
+                                .requestMatchers(HttpMethod.POST, "/api/client").hasRole("USER")
+                                .requestMatchers(HttpMethod.PUT, "/api/client/**").hasRole("USER")
+                                .requestMatchers(HttpMethod.PATCH, "/api/client/**").hasRole("USER")
+                                .requestMatchers(HttpMethod.DELETE, "/api/client/**").hasRole("USER")
+                                .anyRequest().authenticated())
+                .httpBasic(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        return http.build();
     }
-
 }

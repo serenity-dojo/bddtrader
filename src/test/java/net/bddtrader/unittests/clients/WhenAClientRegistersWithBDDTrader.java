@@ -7,16 +7,20 @@ import net.bddtrader.config.TradingDataSource;
 import net.bddtrader.exceptions.MissingMandatoryFieldsException;
 import net.bddtrader.portfolios.*;
 import net.bddtrader.tradingdata.TradingData;
-import org.junit.Before;
-import org.junit.Test;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 
 import java.util.List;
 
 import static net.bddtrader.config.TradingDataSource.DEV;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@ExtendWith(SerenityJUnit5Extension.class)
 public class WhenAClientRegistersWithBDDTrader {
 
     ClientDirectory clientDirectory = new ClientDirectory();
@@ -25,7 +29,7 @@ public class WhenAClientRegistersWithBDDTrader {
     ClientController controller = new ClientController(clientDirectory, portfolioController);
 
 
-    @Before
+    @BeforeEach
     public void resetTestData() {
         TradingData.instanceFor(DEV).reset();
     }
@@ -40,19 +44,22 @@ public class WhenAClientRegistersWithBDDTrader {
         assertThat(registeredClient).isEqualToComparingFieldByField(registeredClient);
     }
 
-    @Test(expected = MissingMandatoryFieldsException.class)
+    @Test
     public void firstNameIsMandatory() {
-        controller.register(controller.register(Client.withFirstName("").andLastName("Smith").andEmail("sarah-jane@smith.com")));
+        assertThrows(MissingMandatoryFieldsException.class,
+        ()-> controller.register(controller.register(Client.withFirstName("").andLastName("Smith").andEmail("sarah-jane@smith.com"))));
     }
 
-    @Test(expected = MissingMandatoryFieldsException.class)
+    @Test
     public void lastNameIsMandatory() {
-        controller.register(controller.register(Client.withFirstName("Sarah-Jane").andLastName("").andEmail("sarah-jane@smith.com")));
+        assertThrows(MissingMandatoryFieldsException.class,
+        ()-> controller.register(controller.register(Client.withFirstName("Sarah-Jane").andLastName("").andEmail("sarah-jane@smith.com"))));
     }
 
-    @Test(expected = MissingMandatoryFieldsException.class)
+    @Test
     public void emailIsMandatory() {
-        controller.register(Client.withFirstName("Sarah-Jane").andLastName("Smith").andEmail(""));
+        assertThrows(MissingMandatoryFieldsException.class,
+                ()->controller.register(Client.withFirstName("Sarah-Jane").andLastName("Smith").andEmail("")));
     }
 
     @Test
@@ -107,22 +114,22 @@ public class WhenAClientRegistersWithBDDTrader {
                              .contains(Position.fromTrade(Trade.buy(100000L).sharesOf("CASH").at(1L).centsEach()));
     }
 
-    @Test(expected = PortfolioNotFoundException.class)
+    @Test
     public void shouldfailIfNoPortfolioCanBeFound() {
         // GIVEN
         Client sarahJane = controller.register(Client.withFirstName("Sarah-Jane").andLastName("Smith").andEmail("sarah-jane@smith.com"));
 
         // WHEN
-        portfolioController.viewPortfolioForClient(-1L);
+        assertThrows(PortfolioNotFoundException.class,()->portfolioController.viewPortfolioForClient(-1L));
     }
 
-    @Test(expected = PortfolioNotFoundException.class)
+    @Test
     public void shouldfailIfNoClientForAPortfolioCanBeFound() {
         // GIVEN
         Client sarahJane = controller.register(Client.withFirstName("Sarah-Jane").andLastName("Smith").andEmail("sarah-jane@smith.com"));
 
         // WHEN
-        Portfolio clientPortfolio = portfolioController.viewPortfolio(-1L);
+        assertThrows(PortfolioNotFoundException.class,()-> portfolioController.viewPortfolio(-1L));
     }
 
 
@@ -147,7 +154,7 @@ public class WhenAClientRegistersWithBDDTrader {
         controller.register(Client.withFirstName("Sarah-Jane").andLastName("Smith").andEmail("sarah-jane@smith.com"));
 
         // WHEN
-        HttpStatus status = controller.findClientById(100L).getStatusCode();
+        HttpStatusCode status = controller.findClientById(100L).getStatusCode();
 
         // THEN
         assertThat(status).isEqualTo(HttpStatus.NOT_FOUND);
